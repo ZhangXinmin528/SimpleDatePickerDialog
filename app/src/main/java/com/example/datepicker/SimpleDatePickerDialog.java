@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,9 +37,15 @@ public class SimpleDatePickerDialog extends AlertDialog implements DialogInterfa
      * context's default date picker dialog theme.
      *
      * @param context the parent context
+     * @see #setOnDateSetListener
      */
     public SimpleDatePickerDialog(@NonNull Context context) {
-        this(context, 0, null, Calendar.getInstance(), -1, -1, -1);
+        this(context, null);
+    }
+
+    public SimpleDatePickerDialog(@NonNull Context context,
+                                  @Nullable DatePickerDialog.OnDateSetListener listener) {
+        this(context, 0, listener, Calendar.getInstance(), -1, -1, -1);
     }
 
     /**
@@ -48,9 +55,15 @@ public class SimpleDatePickerDialog extends AlertDialog implements DialogInterfa
      * @param themeResId the resource ID of the theme against which to inflate
      *                   this dialog, or {@code 0} to use the parent
      *                   {@code context}'s default alert dialog theme
+     * @see #setOnDateSetListener
      */
     public SimpleDatePickerDialog(@NonNull Context context, @StyleRes int themeResId) {
-        this(context, themeResId, null, Calendar.getInstance(), -1, -1, -1);
+        this(context, themeResId, null);
+    }
+
+    public SimpleDatePickerDialog(@NonNull Context context, @StyleRes int themeResId,
+                                  @Nullable DatePickerDialog.OnDateSetListener listener) {
+        this(context, themeResId, listener, Calendar.getInstance(), -1, -1, -1);
     }
 
     /**
@@ -111,15 +124,12 @@ public class SimpleDatePickerDialog extends AlertDialog implements DialogInterfa
     }
 
     private static int resolveDialogTheme(@NonNull Context context, @StyleRes int themeResId) {
+        Log.i("date", "themeResId:" + themeResId);
         if (themeResId == 0) {
             final TypedValue outValue = new TypedValue();
+            // context.getTheme().resolveAttribute(android.R.attr.datePickerDialogTheme, outValue, true);
             //1.需要的效果
-            context.getTheme().resolveAttribute(THEME_TRADITIONAL, outValue, true);
-            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                context.getTheme().resolveAttribute(android.R.attr.datePickerDialogTheme, outValue, true);
-            } else {
-                context.getTheme().resolveAttribute(android.R.attr.alertDialogTheme, outValue, true);
-            }*/
+            context.getTheme().resolveAttribute(android.R.attr.alertDialogTheme, outValue, true);
             return outValue.resourceId;
         } else {
             return themeResId;

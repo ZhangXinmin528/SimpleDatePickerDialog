@@ -11,7 +11,8 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,
+        DatePickerDialog.OnDateSetListener {
     private Context mContext;
     private EditText mResultEt;
     private Calendar mCalendar;
@@ -35,11 +36,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_date_picker) {
-            SimpleDatePickerDialog dialog = new SimpleDatePickerDialog(mContext, this,
-                    mCalendar.get(Calendar.YEAR),
-                    mCalendar.get(Calendar.MONTH),
-                    mCalendar.get(Calendar.DAY_OF_MONTH));
+            //1.THEME_HOLO_LIGHT
+            /*SimpleDatePickerDialog dialog = new SimpleDatePickerDialog(mContext, DatePickerDialog.THEME_HOLO_LIGHT);
+            dialog.setOnDateSetListener(this);
+            dialog.show();*/
+            //2.THEME_HOLO_DARK
+            /*SimpleDatePickerDialog dialog = new SimpleDatePickerDialog(mContext,DatePickerDialog.THEME_HOLO_DARK);
+            dialog.setOnDateSetListener(this);
+            dialog.show();*/
+
+            //3.THEME_DEVICE_DEFAULT_LIGHT
+            /*SimpleDatePickerDialog dialog = new SimpleDatePickerDialog(mContext, DatePickerDialog.THEME_DEVICE_DEFAULT_LIGHT);
+            dialog.setOnDateSetListener(this);
+            dialog.show();*/
+
+            //4.THEME_DEVICE_DEFAULT_DARK
+            /*SimpleDatePickerDialog dialog = new SimpleDatePickerDialog(mContext, DatePickerDialog.THEME_DEVICE_DEFAULT_DARK);
+            dialog.setOnDateSetListener(this);
+            dialog.show();*/
+
+            //5.THEME_TRADITIONAL
+            SimpleDatePickerDialog dialog = new SimpleDatePickerDialog(mContext);
+            dialog.setOnDateSetListener(this);
             dialog.show();
+
         }
     }
 }
